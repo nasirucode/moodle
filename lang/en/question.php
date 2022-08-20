@@ -58,6 +58,7 @@ $string['cannotmovequestion'] = 'You can\'t use this script to move questions th
 $string['cannotopenforwriting'] = 'Cannot open for writing: {$a}';
 $string['cannotpreview'] = 'You can\'t preview these questions!';
 $string['cannotread'] = 'Cannot read import file (or file is empty)';
+$string['cannotregradedifferentqtype'] = 'Cannot regrade with a question of a different type.';
 $string['cannotretrieveqcat'] = 'Could not retrieve question category';
 $string['cannotunhidequestion'] = 'Failed to unhide the question.';
 $string['cannotunzip'] = 'Could not unzip file.';
@@ -202,6 +203,7 @@ $string['importparseerror'] = 'Error(s) found parsing the import file. No questi
 $string['importquestions'] = 'Import questions from file';
 $string['importquestions_help'] = 'This function enables questions in a variety of formats to be imported via text file. Note that the file must use UTF-8 encoding.';
 $string['importquestions_link'] = 'question/import';
+$string['importwrongfileencoding'] = 'The file you selected does not use UTF-8 character encoding. {$a} files must use UTF-8.';
 $string['importwrongfiletype'] = 'The type of the file you selected ({$a->actualtype}) does not match the type expected by this import format ({$a->expectedtype}).';
 $string['invalidarg'] = 'No valid arguments supplied or incorrect server configuration';
 $string['invalidcategoryidforparent'] = 'Invalid category id for parent!';
@@ -245,7 +247,7 @@ $string['movingquestionsnofiles'] = 'Are you sure you want to move question(s) {
 $string['needtochoosecat'] = 'You need to choose a category to move this question to or press \'cancel\'.';
 $string['nocate'] = 'No such category {$a}!';
 $string['nopermissionadd'] = 'You don\'t have permission to add questions here.';
-$string['nopermissionmove'] = 'You don\'t have permission to move questions from here. You must save the question in this category or save it as a new question.';
+$string['nopermissionedit'] = 'You don\'t have permission to edit questions from here.';
 $string['noprobs'] = 'No problems found in your question database.';
 $string['noquestions'] = 'No questions were found that could be exported. Make sure that you have selected a category to export that contains questions.';
 $string['noquestionsinfile'] = 'There are no questions in the import file';
@@ -499,3 +501,6 @@ $string['questionloaderror'] = 'Could not load the question options.';
 
 // Deprecated since Moodle 4.0.
 $string['notflagged'] = 'Not flagged';
+
+// Deprecated since Moodle 4.1.
+$string['nopermissionmove'] = 'You don\'t have permission to move questions from here. You must save the question in this category or save it as a new question.';

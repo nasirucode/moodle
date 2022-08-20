@@ -23,6 +23,9 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+use mod_data\manager;
+use mod_data\preset;
+
 defined('MOODLE_INTERNAL') || die();
 
 
@@ -311,7 +314,7 @@ class mod_data_generator extends testing_module_generator {
                     get_file_storage()->create_file_from_string(['component' => 'user', 'filearea' => 'draft',
                         'contextid' => $usercontext->id, 'itemid' => $itemid, 'filepath' => '/',
                         'filename' => $filename],
-                        file_get_contents($CFG->dirroot.'/mod/data/pix/icon.png'));
+                        file_get_contents($CFG->dirroot.'/mod/data/pix/monologo.png'));
                 }
 
                 $fieldname = 'field_' . $fieldid . '_file';
@@ -360,5 +363,34 @@ class mod_data_generator extends testing_module_generator {
         }
 
         return $recordid;
+    }
+
+    /**
+     * Creates a preset from a mod_data instance.
+     *
+     * @param stdClass $instance The mod_data instance.
+     * @param stdClass|null $record The preset information, like 'name'.
+     * @return preset The preset that has been created.
+     */
+    public function create_preset(stdClass $instance, stdClass $record = null): preset {
+        if (is_null($record)) {
+            $record = new stdClass();
+        }
+
+        // Fill in optional values if not specified.
+        $presetname = 'New preset ' . microtime();
+        if (isset($record->name)) {
+            $presetname = $record->name;
+        }
+        $presetdescription = null;
+        if (isset($record->description)) {
+            $presetdescription = $record->description;
+        }
+
+        $manager = manager::create_from_instance($instance);
+        $preset = preset::create_from_instance($manager, $presetname, $presetdescription);
+        $preset->save();
+
+        return $preset;
     }
 }

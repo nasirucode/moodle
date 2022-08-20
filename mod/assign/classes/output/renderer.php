@@ -168,7 +168,7 @@ class renderer extends \plugin_renderer_base {
             $fullname = fullname($summary->user, $summary->viewfullnames);
             $extrainfo = array();
             foreach ($summary->extrauserfields as $extrafield) {
-                $extrainfo[] = $summary->user->$extrafield;
+                $extrainfo[] = s($summary->user->$extrafield);
             }
             if (count($extrainfo)) {
                 $fullname .= ' (' . implode(', ', $extrainfo) . ')';
@@ -246,7 +246,7 @@ class renderer extends \plugin_renderer_base {
 
         $description = $header->preface;
         if ($header->showintro || $header->activity) {
-            $description = $this->output->box_start('generalbox boxaligncenter', 'intro');
+            $description = $this->output->box_start('generalbox boxaligncenter');
             if ($header->showintro) {
                 $description .= format_module_intro('assign', $header->assign, $header->coursemoduleid);
             }
@@ -1305,7 +1305,7 @@ class renderer extends \plugin_renderer_base {
 
         // There is a submission, display the relevant early/late message.
         if ($submission && $submission->status == ASSIGN_SUBMISSION_STATUS_SUBMITTED) {
-            $latecalculation = $submission->timemodified - ($timelimitenabledbeforeduedate ? $submission->timecreated : 0);
+            $latecalculation = $submission->timemodified - ($timelimitenabledbeforeduedate ? $submission->timestarted : 0);
             $latethreshold = $timelimitenabledbeforeduedate ? $status->timelimit : $status->duedate;
             $earlystring = $timelimitenabledbeforeduedate ? 'submittedundertime' : 'submittedearly';
             $latestring = $timelimitenabledbeforeduedate ? 'submittedovertime' : 'submittedlate';

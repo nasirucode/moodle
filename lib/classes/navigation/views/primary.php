@@ -33,6 +33,8 @@ class primary extends view {
      * Initialise the primary navigation node
      */
     public function initialise(): void {
+        global $CFG;
+
         if (during_initial_install() || $this->initialised) {
             return;
         }
@@ -45,30 +47,28 @@ class primary extends view {
             $sitehome = $this->add(get_string('home'), new \moodle_url('/'), self::TYPE_SYSTEM,
                 null, 'home', new \pix_icon('i/home', ''));
         }
-        if (isloggedin() ) {
-            if (!isguestuser()) {
-                $homepage = get_home_page();
-                if ($homepage == HOMEPAGE_MY || $homepage == HOMEPAGE_MYCOURSES) {
-                    // We need to stop automatic redirection.
-                    if ($showhomenode) {
-                        $sitehome->action->param('redirect', '0');
-                    }
+        if (isloggedin() && !isguestuser()) {
+            $homepage = get_home_page();
+            if ($homepage == HOMEPAGE_MY || $homepage == HOMEPAGE_MYCOURSES) {
+                // We need to stop automatic redirection.
+                if ($showhomenode) {
+                    $sitehome->action->param('redirect', '0');
                 }
+            }
 
-                // Add the dashboard link.
-                $showmyhomenode = empty($this->page->theme->removedprimarynavitems) ||
-                    !in_array('myhome', $this->page->theme->removedprimarynavitems);
-                if ($showmyhomenode) {
-                    $this->add(get_string('myhome'), new \moodle_url('/my/'),
-                        self::TYPE_SETTING, null, 'myhome', new \pix_icon('i/dashboard', ''));
-                }
+            // Add the dashboard link.
+            $showmyhomenode = !empty($CFG->enabledashboard) && (empty($this->page->theme->removedprimarynavitems) ||
+                !in_array('myhome', $this->page->theme->removedprimarynavitems));
+            if ($showmyhomenode) {
+                $this->add(get_string('myhome'), new \moodle_url('/my/'),
+                    self::TYPE_SETTING, null, 'myhome', new \pix_icon('i/dashboard', ''));
             }
 
             // Add the mycourses link.
             $showcoursesnode = empty($this->page->theme->removedprimarynavitems) ||
                 !in_array('courses', $this->page->theme->removedprimarynavitems);
             if ($showcoursesnode) {
-                $this->add(get_string('mycourses'), new \moodle_url('/my/courses.php'), self::TYPE_ROOTNODE, null, 'courses');
+                $this->add(get_string('mycourses'), new \moodle_url('/my/courses.php'), self::TYPE_ROOTNODE, null, 'mycourses');
             }
         }
 
